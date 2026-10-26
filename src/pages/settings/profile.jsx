@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { FiCamera } from "react-icons/fi";
 import { useAuthContext } from "../../context/AuthContext.jsx";
+import { API_HOST_URL } from "../../api/axiosInstance.js";
 
 const emptyProfile = { name: "", email: "", company: "", phone: "", timezone: "Asia/Dhaka" };
-const avatarSource = (url) => url ? `${(import.meta.env.VITE_API_URL || "http://localhost:5001/api").replace(/\/api\/?$/, "")}${url}` : "";
+const avatarSource = (url) => url ? `${API_HOST_URL}${url}` : "";
 
 export default function Profile() {
   const { user, updateProfile, updateAvatar } = useAuthContext();

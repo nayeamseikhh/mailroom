@@ -18,6 +18,7 @@ import {
 export const AuthContext = createContext(null);
 
 const AUTH_SESSION_KEY = "mailroom-authenticated";
+const AUTH_TOKEN_KEY = "mailroom-auth-token";
 
 // Reuse an in-flight session request if the provider mounts again.
 let sessionRequest = null;
@@ -25,7 +26,9 @@ let sessionRequest = null;
 function restoreCurrentUser() {
   const hasStoredSession =
     window.localStorage.getItem(AUTH_SESSION_KEY) ||
-    window.sessionStorage.getItem(AUTH_SESSION_KEY);
+    window.sessionStorage.getItem(AUTH_SESSION_KEY) ||
+    window.localStorage.getItem(AUTH_TOKEN_KEY) ||
+    window.sessionStorage.getItem(AUTH_TOKEN_KEY);
 
   if (!hasStoredSession) return Promise.resolve(null);
 
@@ -40,19 +43,25 @@ function restoreCurrentUser() {
   return sessionRequest;
 }
 
-function rememberAuthenticatedSession(storage) {
+function rememberAuthenticatedSession(storage, token) {
   const otherStorage =
     storage === window.localStorage
       ? window.sessionStorage
       : window.localStorage;
 
   otherStorage.removeItem(AUTH_SESSION_KEY);
+  otherStorage.removeItem(AUTH_TOKEN_KEY);
   storage.setItem(AUTH_SESSION_KEY, "1");
+  if (token) {
+    storage.setItem(AUTH_TOKEN_KEY, token);
+  }
 }
 
 function clearAuthenticatedSession() {
   window.localStorage.removeItem(AUTH_SESSION_KEY);
+  window.localStorage.removeItem(AUTH_TOKEN_KEY);
   window.sessionStorage.removeItem(AUTH_SESSION_KEY);
+  window.sessionStorage.removeItem(AUTH_TOKEN_KEY);
 }
 
 export function AuthProvider({ children }) {
@@ -112,6 +121,7 @@ export function AuthProvider({ children }) {
     setUser(data?.user ?? null);
     rememberAuthenticatedSession(
       remember ? window.localStorage : window.sessionStorage,
+      data?.token,
     );
     return data;
   };
@@ -124,7 +134,7 @@ export function AuthProvider({ children }) {
     });
 
     setUser(data?.user ?? null);
-    rememberAuthenticatedSession(window.localStorage);
+    rememberAuthenticatedSession(window.localStorage, data?.token);
     return data;
   };
 

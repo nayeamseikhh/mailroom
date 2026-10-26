@@ -15,6 +15,7 @@ import {
 } from "react-icons/fi";
 import { useAuthContext } from "../../context/AuthContext.jsx";
 import { getDashboardUsage } from "../../api/dashboardApi.js";
+import { API_HOST_URL } from "../../api/axiosInstance.js";
 
 const NAV = [
   { label: "Dashboard", icon: FiHome, to: "/dashboard", end: true },
@@ -134,9 +135,7 @@ export default function DashboardLayout() {
   const { user, logout } = useAuthContext();
   const [title, subtitle] = PAGE_DETAILS[pathname] || ["Mailroom", ""];
   const initials = (user?.name || user?.email || "You").slice(0, 1).toUpperCase();
-  const avatarUrl = user?.avatarUrl
-    ? `${(import.meta.env.VITE_API_URL || "http://localhost:5001/api").replace(/\/api\/?$/, "")}${user.avatarUrl}`
-    : "";
+  const avatarUrl = user?.avatarUrl ? `${API_HOST_URL}${user.avatarUrl}` : "";
 
   useEffect(() => {
     let active = true;
