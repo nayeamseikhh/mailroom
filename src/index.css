@@ -1,0 +1,233 @@
+@import url("https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+.mailroom-theme main[class~="bg-gray-50"] {
+  background: transparent !important;
+}
+
+.mailroom-theme :is(
+  button,
+  a[role="button"],
+  a[class*="rounded"][class*="px-"][class*="py-"][class*="bg-"]
+):not(.fixed.inset-0) {
+  border-color: rgb(167 243 208 / 28%);
+  background-color: rgb(16 185 129 / 13%) !important;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.auth-theme :is(
+  button,
+  a[role="button"],
+  a[class*="rounded"][class*="px-"][class*="py-"][class*="bg-"]
+) {
+  border-color: rgb(5 150 105 / 32%);
+  background-color: rgb(16 185 129 / 12%) !important;
+  color: #065f46;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.auth-theme :is(
+  button,
+  a[role="button"],
+  a[class*="rounded"][class*="px-"][class*="py-"][class*="bg-"]
+):hover:not(:disabled) {
+  border-color: rgb(5 150 105 / 48%);
+  background-color: rgb(16 185 129 / 20%) !important;
+}
+
+.auth-theme :is(
+  button,
+  a[role="button"],
+  a[class*="rounded"][class*="px-"][class*="py-"][class*="bg-"]
+):focus-visible {
+  outline: 2px solid rgb(5 150 105 / 65%);
+  outline-offset: 2px;
+}
+
+.mailroom-theme :is(
+  button,
+  a[role="button"],
+  a[class*="rounded"][class*="px-"][class*="py-"][class*="bg-"]
+):not(.fixed.inset-0):hover:not(:disabled) {
+  border-color: rgb(167 243 208 / 46%);
+  background-color: rgb(52 211 153 / 22%) !important;
+}
+
+.mailroom-theme :is(
+  button,
+  a[role="button"],
+  a[class*="rounded"][class*="px-"][class*="py-"][class*="bg-"]
+):not(.fixed.inset-0):focus-visible {
+  outline: 2px solid rgb(167 243 208 / 75%);
+  outline-offset: 2px;
+}
+
+.mailroom-theme main :is(
+  [class~="bg-white"],
+  [class~="bg-gray-50"],
+  [class~="bg-gray-100"],
+  [class~="bg-[#F7F9F8]"],
+  [class~="bg-[#FBFCFB]"],
+  [class~="bg-[#F8FAF9]"],
+  [class~="bg-[#F5F6F6]"],
+  [class~="bg-[#F5F8FC]"],
+  [class~="bg-[#F1F3F4]"]
+):not(input):not(textarea):not(select):not(option):not(.mail-template-paper),
+.mailroom-theme [role="dialog"] :is(
+  [class~="bg-white"],
+  [class~="bg-[#F2F4F1]"]
+):not(input):not(textarea):not(select):not(option) {
+  border-color: rgb(255 255 255 / 22%);
+  background-color: rgb(8 39 29 / 58%) !important;
+  color: #f4f8f5;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.mailroom-theme main :is(
+  [class~="border-gray-200"],
+  [class~="border-gray-300"],
+  [class~="border-[#DCE2DF]"],
+  [class~="border-[#E8ECEA]"],
+  [class~="border-[#CBD3CF]"],
+  [class~="border-[#E2E5E3]"]
+) {
+  border-color: rgb(255 255 255 / 22%);
+}
+
+.mailroom-theme main :is(
+  [class~="hover:bg-gray-50"],
+  [class~="hover:bg-gray-100"],
+  [class~="hover:bg-indigo-50"],
+  [class~="hover:bg-[#F7F9F8]"],
+  [class~="hover:bg-[#FBFCFB]"],
+  [class~="hover:bg-[#EEF1EF]"],
+  [class~="hover:bg-[#F1F3F4]"],
+  [class~="hover:bg-[#F5F8FC]"],
+  [class~="hover:bg-[#EAF0ED]"],
+  [class~="hover:bg-white"],
+  [class~="hover:bg-white/90"]
+):hover {
+  background-color: rgb(255 255 255 / 11%) !important;
+}
+
+.mailroom-theme main :is(
+  [class~="hover:text-gray-900"],
+  [class~="hover:text-indigo-700"],
+  [class~="hover:text-[#16201E]"],
+  [class~="hover:text-[#2F4BE0]"]
+):hover {
+  color: #fff !important;
+}
+
+.mailroom-theme main :is(
+  [class~="text-gray-900"],
+  [class~="text-gray-800"],
+  [class~="text-[#16201E]"],
+  [class~="text-[#202124]"]
+):not(input):not(textarea):not(select),
+.mailroom-theme [role="dialog"] :is(
+  [class~="text-gray-900"],
+  [class~="text-gray-800"],
+  [class~="text-[#16201E]"]
+):not(input):not(textarea):not(select) {
+  color: #f4f8f5 !important;
+}
+
+.mailroom-theme main :is(
+  [class~="text-gray-700"],
+  [class~="text-gray-600"],
+  [class~="text-gray-500"],
+  [class~="text-[#5B6B67]"],
+  [class~="text-[#71807B]"],
+  [class~="text-[#87938F]"],
+  [class~="text-[#64716D]"],
+  [class~="text-[#52605B]"],
+  [class~="text-[#44524D]"],
+  [class~="text-[#2F4BE0]"],
+  [class~="text-[#21734D]"],
+  [class~="text-[#176B48]"],
+  [class~="text-[#3C4043]"],
+  [class~="text-[#5F6368]"],
+  [class~="text-[#70757A]"],
+  [class~="text-[#80868B]"]
+):not(input):not(textarea):not(select):not([class*="bg-[#F0F2F1]"]):not([class*="bg-[#FFF4E8]"]):not([class*="bg-[#EEF1FF]"]):not([class*="bg-[#EAF7EF]"]):not([class*="bg-[#FCECEC]"]),
+.mailroom-theme [role="dialog"] :is(
+  [class~="text-gray-700"],
+  [class~="text-gray-600"],
+  [class~="text-gray-500"],
+  [class~="text-[#5B6B67]"],
+  [class~="text-[#71807B]"],
+  [class~="text-[#87938F]"],
+  [class~="text-[#64716D]"],
+  [class~="text-[#52605B]"]
+) {
+  color: rgb(235 244 239 / 76%) !important;
+}
+
+.mailroom-theme main :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  textarea,
+  select
+),
+.mailroom-theme [role="dialog"] :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  textarea,
+  select
+) {
+  border-color: rgb(167 243 208 / 32%);
+  background-color: rgb(6 48 34 / 76%) !important;
+  color: #f4f8f5;
+  caret-color: #a7f3d0;
+  color-scheme: dark;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.mailroom-theme main :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  textarea,
+  select
+):focus,
+.mailroom-theme [role="dialog"] :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  textarea,
+  select
+):focus {
+  border-color: rgb(167 243 208 / 72%);
+  background-color: rgb(6 48 34 / 92%) !important;
+  outline-color: rgb(167 243 208 / 60%);
+}
+
+.mailroom-theme main :is(input, textarea)::placeholder,
+.mailroom-theme [role="dialog"] :is(input, textarea)::placeholder {
+  color: rgb(235 244 239 / 52%);
+}
+
+.mailroom-theme main input:is([type="checkbox"], [type="radio"]),
+.mailroom-theme [role="dialog"] input:is([type="checkbox"], [type="radio"]) {
+  accent-color: #34d399;
+  color-scheme: dark;
+}
+
+.mailroom-theme main option,
+.mailroom-theme [role="dialog"] option {
+  background-color: #0b3327;
+  color: #f4f8f5;
+}
