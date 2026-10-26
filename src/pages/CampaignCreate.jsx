@@ -136,6 +136,7 @@ function CampaignComposer({ draftId }) {
   const [loadingLists, setLoadingLists] = useState(true);
   const [smtpStatus, setSmtpStatus] = useState("checking");
   const [smtpSender, setSmtpSender] = useState("");
+  const [smtpErrorMessage, setSmtpErrorMessage] = useState("");
   const [loadedCampaignId, setLoadedCampaignId] = useState(null);
 
   const [notice, setNotice] = useState("");
@@ -276,6 +277,7 @@ function CampaignComposer({ draftId }) {
               : "disconnected",
         );
         setSmtpSender(data?.verifiedSender || "");
+        setSmtpErrorMessage(data?.error || "");
         setMessage((current) => ({
           ...current,
           senderEmail: current.senderEmail || data?.verifiedSender || "",
@@ -661,12 +663,20 @@ function CampaignComposer({ draftId }) {
           )}
 
           {smtpStatus !== "connected" && smtpStatus !== "checking" && (
-            <div role="status" className="mx-5 mt-5 rounded-xl border border-amber-200/25 bg-amber-300/10 px-4 py-3 text-sm text-amber-100 sm:mx-7">
-              {smtpStatus === "unconfigured"
-                ? "Account email delivery is not configured. You can save drafts, but sending stays disabled until you add SMTP details in Settings > Sending."
-                : smtpStatus === "disconnected"
-                  ? "SMTP settings are present, but the server could not connect to the mail provider. Check the SMTP host, port, and credentials before sending."
-                  : "Could not verify the SMTP connection. Check the API server and try again."}
+            <div role="status" className="mx-5 mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-200/25 bg-amber-300/10 px-4 py-3 text-sm text-amber-100 sm:mx-7">
+              <div className="flex-1">
+                {smtpStatus === "unconfigured"
+                  ? "Account email delivery is not configured. You can save drafts, but sending stays disabled until you add SMTP details in Settings > Sending."
+                  : smtpStatus === "disconnected"
+                    ? (smtpErrorMessage || "SMTP settings are present, but the server could not connect to the mail provider. Check your SMTP host, port, and credentials.")
+                    : "Could not verify the SMTP connection. Check the API server and try again."}
+              </div>
+              <Link
+                to="/settings/sending"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-amber-300/30 bg-amber-400/20 px-3 py-1.5 text-xs font-semibold text-amber-50 transition hover:bg-amber-400/30"
+              >
+                Go to Settings &gt; Sending
+              </Link>
             </div>
           )}
 
