@@ -61,6 +61,24 @@ const imapFormFromSettings = (imap = {}) => ({
   mailbox: imap.mailbox || "INBOX",
 });
 
+const cleanSmtpPayload = (form) => ({
+  host: typeof form.host === "string" ? form.host.trim().toLowerCase() : "",
+  port: Number(form.port),
+  secure: Boolean(form.secure),
+  username: typeof form.username === "string" ? form.username.trim() : "",
+  password: typeof form.password === "string" ? form.password : "",
+  senderEmail: typeof form.senderEmail === "string" ? form.senderEmail.trim().toLowerCase() : "",
+});
+
+const cleanImapPayload = (form) => ({
+  host: typeof form.host === "string" ? form.host.trim().toLowerCase() : "",
+  port: Number(form.port),
+  secure: Boolean(form.secure),
+  username: typeof form.username === "string" ? form.username.trim() : "",
+  password: typeof form.password === "string" ? form.password : "",
+  mailbox: typeof form.mailbox === "string" ? form.mailbox.trim() : "INBOX",
+});
+
 export default function Sending() {
   const { user } = useAuthContext();
   const [form, setForm] = useState(sendingDefaults);
@@ -132,7 +150,7 @@ export default function Sending() {
     setSmtpError("");
 
     try {
-      const { data } = await updateSmtpSettings(smtpForm);
+      const { data } = await updateSmtpSettings(cleanSmtpPayload(smtpForm));
       setSmtpConfigured(true);
       setSmtpForm(smtpFormFromSettings(data.smtp, user?.email || ""));
       setForm((current) => ({ ...current, ...data.sending }));
@@ -150,9 +168,10 @@ export default function Sending() {
     setTesting(true);
     setSmtpMessage("");
     setSmtpError("");
-    const tested = JSON.stringify(smtpForm);
+    const payload = cleanSmtpPayload(smtpForm);
+    const tested = JSON.stringify(payload);
     try {
-      await testSmtpSettings(smtpForm);
+      await testSmtpSettings(payload);
       setTestedConfiguration(tested);
       setSmtpMessage("Connection successful. The SMTP account is ready.");
     } catch (err) {
@@ -172,7 +191,8 @@ export default function Sending() {
     try {
       const { data } = await deleteSmtpSettings();
       setSmtpConfigured(false);
-      setSmtpForm({ ...smtpDefaults, ...data.smtp });
+      setSmtpForm(smtpFormFromSettings(data.smtp, user?.email || ""));
+      setTestedConfiguration("");
       setSmtpMessage("Account SMTP settings removed.");
     } catch (err) {
       setSmtpError(
@@ -206,9 +226,10 @@ export default function Sending() {
     setTestingImap(true);
     setImapMessage("");
     setImapError("");
-    const tested = JSON.stringify(imapForm);
+    const payload = cleanImapPayload(imapForm);
+    const tested = JSON.stringify(payload);
     try {
-      const { data } = await testImapSettings(imapForm);
+      const { data } = await testImapSettings(payload);
       setTestedImapConfiguration(tested);
       setImapMessage(`Connection successful. Mailbox “${data.mailbox}” is ready to monitor.`);
     } catch (err) {
@@ -225,7 +246,7 @@ export default function Sending() {
     setImapMessage("");
     setImapError("");
     try {
-      const { data } = await updateImapSettings(imapForm);
+      const { data } = await updateImapSettings(cleanImapPayload(imapForm));
       setImapConfigured(true);
       setImapForm(imapFormFromSettings(data.imap));
       setTestedImapConfiguration("");
